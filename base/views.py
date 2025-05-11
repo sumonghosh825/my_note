@@ -78,7 +78,7 @@ def dashboard(request):
 
 # Task Views
 @login_required
-def task_list(request):
+def add_task(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         category = request.POST.get('category')
@@ -98,7 +98,7 @@ def task_list(request):
             assigned_to=assigned_user,
             created_by=request.user
         )
-        return redirect('task_list')
+        return redirect('add_task')
 
     tasks = Task.objects.filter(created_by=request.user).order_by('-created_at')
     users = User.objects.all()
@@ -126,7 +126,7 @@ def timeline(request):
 def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id, created_by=request.user)
     task.delete()
-    return redirect('task_list')
+    return redirect('add_task')
 
 
 @login_required
@@ -141,7 +141,7 @@ def edit_task(request, task_id):
         assigned_username = request.POST['assigned_to']
         task.assigned_to = get_object_or_404(User, username=assigned_username)
         task.save()
-        return redirect('task_list')
+        return redirect('add_task')
 
 
 

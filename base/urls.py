@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     register_view, login_view, logout_view,
     dashboard, profile,
-    task_list, board, details, timeline,delete_task,edit_task
+    task_list, board, details, timeline,delete_task,edit_task,add_task
 )
 
 urlpatterns = [
@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('task/delete/<int:task_id>/', delete_task, name='delete_task'),
     path('edit-task/<int:task_id>/', edit_task, name='edit_task'),
+    path('task/', add_task, name='add_task'),
 
 
 ]
