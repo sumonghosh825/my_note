@@ -44,69 +44,79 @@
 
         <!--- Sidemenu -->
         <ul class="side-nav">
+    <li class="side-nav-title">Navigation</li>
 
-            <li class="side-nav-title">Navigation</li>
+    <li class="side-nav-item">
+        <a href="{% url 'dashboard' %}" class="side-nav-link">
+            <i class="uil-home-alt"></i>
+            <span> Dashboards </span>
+        </a>
+    </li>
 
-            <li class="side-nav-item">
-                <a href="{% url 'dashboard' %}" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
-                    <span> Dashboards </span>
-                </a>
-                <div class="collapse" id="sidebarDashboards">
-                    <ul class="side-nav-second-level">
-                       
-                    </ul>
-                </div>
-            </li>
-             <li class="side-nav-item">
-             <a href="{% url 'profile' %}" class="side-nav-link">
-             <i class="mdi mdi-account-circle"></i>
+    <li class="side-nav-item">
+        <a href="{% url 'profile' %}" class="side-nav-link">
+            <i class="mdi mdi-account-circle"></i>
             <span> Profile </span>
-            </a>
-        </li>
+        </a>
+    </li>
 
+    <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks" class="side-nav-link">
+            <i class="uil-clipboard-alt"></i>
+            <span> Tasks </span>
+            <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarTasks">
+            <ul class="side-nav-second-level">
+                <li><a href="{% url 'add_task' %}">List</a></li>
+                <li><a href="{% url 'details' %}">Details</a></li>
+                <li><a href="{% url 'board' %}">Board</a></li>
+            </ul>
+        </div>
+    </li>
 
-
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks" class="side-nav-link">
-                    <i class="uil-clipboard-alt"></i>
-                    <span> Tasks </span>
-                    <span class="menu-arrow"></span>
+    <li class="side-nav-item">
+    <a data-bs-toggle="collapse" href="#sidebarTracking" aria-expanded="false" aria-controls="sidebarTracking" class="side-nav-link">
+        <i class="bi bi-list-check"></i>
+        <span> Task Tracking </span>
+        <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="sidebarTracking">
+        <ul class="side-nav-second-level">
+            <li>
+                <a class="{% if selected_category == 'Completed' %}active{% endif %}" href="{% url 'task_list' %}?category=Completed">
+                    <i class="bi bi-check-circle me-1"></i> Completed
                 </a>
-                <div class="collapse" id="sidebarTasks">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{% url 'task_list' %}">List</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'details' %}">Details</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'board' %}">Board</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
-             <li class="side-nav-item">
-             <a href="{% url 'timeline' %}" class="side-nav-link">
-             <i class="uil-chart"></i>
-            <span> Timeline </span>
-            </a>
-        </li>
-
-            <li class="side-nav-item">
-                <a href="{% url 'logout' %}" class="side-nav-link">
-                    <i class="mdi mdi-logout me"></i>
-                    <span> Logout </span>
+            <li>
+                <a class="{% if selected_category == 'Ongoing' %}active{% endif %}" href="{% url 'task_list' %}?category=Ongoing">
+                    <i class="bi bi-hourglass-split me-1"></i> Ongoing
                 </a>
-                <div class="collapse" id="sidebarDashboards">
-                    <ul class="side-nav-second-level">                      
-                    </ul>
-                </div>
             </li>
-
+            <li>
+                <a class="{% if selected_category == 'Pending' %}active{% endif %}" href="{% url 'task_list' %}?category=Pending">
+                    <i class="bi bi-exclamation-circle me-1"></i> Pending
+                </a>
+            </li>
         </ul>
+    </div>
+</li>
+
+<li class="side-nav-item">
+        <a href="{% url 'timeline' %}" class="side-nav-link">
+            <i class="uil-chart"></i>
+            <span> Timeline </span>
+        </a>
+    </li>
+
+    <li class="side-nav-item">
+        <a href="{% url 'logout' %}" class="side-nav-link">
+            <i class="mdi mdi-logout me"></i>
+            <span> Logout </span>
+        </a>
+    </li>
+</ul>
+
         <!--- End Sidemenu -->
 
         <div class="clearfix"></div>

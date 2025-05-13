@@ -148,8 +148,13 @@ def edit_task(request, task_id):
 @login_required
 def task_list(request):
     search_query = request.GET.get('search', '')
+    category = request.GET.get('category', '')  # get category filter
+    users = User.objects.all()
 
     tasks = Task.objects.filter(created_by=request.user)
+
+    if category:
+        tasks = tasks.filter(category=category)
 
     if search_query:
         tasks = tasks.filter(
@@ -162,8 +167,14 @@ def task_list(request):
         )
 
     tasks = tasks.order_by('-created_at')
-    users = User.objects.all()
-    return render(request, 'task/list.html', {'tasks': tasks, 'users': users, 'search_query': search_query})
+
+    return render(request, 'task/list.html', {
+        'tasks': tasks,
+        'users': users,
+        'search_query': search_query,
+        'selected_category': category,
+    })
+
 
 
 
@@ -206,3 +217,4 @@ def edit_profile(request):
         return redirect('profile')  # redirect back to profile page
     else:
         return render(request, 'profile.html')
+
