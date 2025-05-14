@@ -98,7 +98,7 @@ def add_task(request):
             assigned_to=assigned_user,
             created_by=request.user
         )
-        return redirect('add_task')
+        return redirect('task_list')
 
     tasks = Task.objects.filter(created_by=request.user).order_by('-created_at')
     users = User.objects.all()
@@ -148,13 +148,9 @@ def edit_task(request, task_id):
 @login_required
 def task_list(request):
     search_query = request.GET.get('search', '')
-    category = request.GET.get('category', '')  # get category filter
     users = User.objects.all()
 
     tasks = Task.objects.filter(created_by=request.user)
-
-    if category:
-        tasks = tasks.filter(category=category)
 
     if search_query:
         tasks = tasks.filter(
@@ -171,8 +167,7 @@ def task_list(request):
     return render(request, 'task/list.html', {
         'tasks': tasks,
         'users': users,
-        'search_query': search_query,
-        'selected_category': category,
+        'search_query': search_query
     })
 
 
@@ -186,7 +181,7 @@ def timeline_view(request):
         {"title": "New Task Created", "description": "You created a new task 'Design Homepage'.", "time": datetime(2025, 5, 8, 10, 15)},
         {"title": "Login", "description": "You logged in successfully.", "time": datetime(2025, 5, 7, 9, 0)},
     ]
-    return render(request, "timeline.html", {"timeline_items": timeline_items})
+    return render(request, "timeline/timeline.html", {"timeline_items": timeline_items})
 
 
 
@@ -218,3 +213,19 @@ def edit_profile(request):
     else:
         return render(request, 'profile.html')
 
+@login_required
+def show_tasks(request):
+    tasks = Task.objects.all()
+    selected_category = request.GET.get('category')
+    selected_priority = request.GET.get('priority')
+
+    if selected_category:
+        tasks = tasks.filter(category=selected_category)
+    if selected_priority:
+        tasks = tasks.filter(priority=selected_priority)
+
+    return render(request, 'task/list.html', {
+        'tasks': tasks,
+        'selected_category': selected_category,
+        'selected_priority': selected_priority,
+    })
